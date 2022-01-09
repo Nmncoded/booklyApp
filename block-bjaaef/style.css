@@ -132,6 +132,7 @@ img {
   border: 2px solid rgba(64,117,213,1);
   object-fit: cover;
   font-size: 0;
+  background-color: rgba(64,117,213,1);
 }
 h1 {
   color: rgba(0,0,0,0.6);
