@@ -1,6 +1,11 @@
 let bigBox = document.querySelector(`.boxes`);
+for(let i=0;i<500;i++){
+    let smallbox = document.createElement(`div`);
+    smallbox.classList.add(`box`);
+    smallbox.innerText = changeRandomNumber(500);
+    bigBox.append(smallbox);
+}
 let allBoxes = document.querySelectorAll(`.box`);
-
 let hexColor = [
     "0",
     "1",
@@ -24,19 +29,19 @@ let hexColor = [
 function changeRandomColor(){
     let randomColor = "#";
 for(let i=0; i<6;i++){
-    randomColor += hexColor[Math.floor(Math.random()*16)]
+    randomColor += hexColor[changeRandomNumber(16)]
 }
 return randomColor;
 }
 
-function changeRandomNumber(){
-    return Math.floor(Math.random()*500)
+function changeRandomNumber(max){
+    return Math.floor(Math.random()*max)
 }
 
 function mouseMoveHandler(){
     allBoxes.forEach(box => {
-        box.innerText = changeRandomNumber();
         box.style.backgroundColor = changeRandomColor();
+        box.innerText = changeRandomNumber(500);
     })
 }
 
