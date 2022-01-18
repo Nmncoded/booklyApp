@@ -8,7 +8,8 @@ function main(){
     let active = document.querySelector(`.active`);
     let completed = document.querySelector(`.completed`);
     let footer = document.querySelector(`footer`);
-let isActive = "all";
+    let isActive = "all";
+    let isclrcmp = "all";
 
 let allTodos = JSON.parse(localStorage.getItem(`todos`)) || [];
 
@@ -21,7 +22,7 @@ let allTodos = JSON.parse(localStorage.getItem(`todos`)) || [];
     <span>X</span>
     </li>
 */
-
+// 
 
 function handleInput(event) {
     let value = event.target.value;
@@ -158,7 +159,7 @@ function showClearBtn(data) {
 
 function handleClrCmpltdClick(event) {
     // let cloneTodos = [];
-    allTodos =  allTodos.filter(todo => !todo.isDone)
+    allTodos =  allTodos.filter(todo => !todo.isDone) /* bug hai jb hum completed pr click krne ke baad clrcompleted pr click kr rhe hai to vo isDone = false objects return kr rha hai*/
     if (showClearBtn(allTodos)) {
         clrCmplted.innerText = `Clear completed`
     } else {
@@ -166,10 +167,16 @@ function handleClrCmpltdClick(event) {
     }
     localStorage.setItem(`todos`, JSON.stringify(allTodos));
     addFooter(allTodos);
-    createUI(allTodos, ul);
+    // createUI(allTodos, ul);
+    if(isclrcmp === "completed"){
+        handleCompletedTodos();
+    }else{
+        handleAllTodos();
+    }
 }
 
 function handleAllTodos(event) {
+    isclrcmp = "all";
     isActive = "all";
     allTodos = allTodos.map(todo => todo);
     // addFooter(ul);
@@ -185,6 +192,7 @@ function handleActiveTodos(event){
 }
 
 function handleCompletedTodos(event){
+    isclrcmp = "completed";
     isActive = "completed";
     let cloneTodos = [];
     cloneTodos =  allTodos.filter(todo => todo.isDone)
