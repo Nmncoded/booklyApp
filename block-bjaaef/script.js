@@ -1,3 +1,4 @@
+function main(){
 let p = document.querySelector(`header p`)
 p.innerText = `👑 People of GOT`;
 let inputSearch = p.nextElementSibling;
@@ -65,6 +66,7 @@ function allPeopleCards(data = allHousesPeople) {
         li.append(divElm, descr, btn);
 
         ul.append(li);
+        
     })
 };
 allPeopleCards();
@@ -79,7 +81,8 @@ function handleInputSearch(event) {
 
 
 inputSearch.addEventListener(`input`, handleInputSearch);
-
+}
+main();
 // let demo = got.houses.reduce((acc, cv) => {
 //     acc = acc.concat(cv.people);
 //     return acc
