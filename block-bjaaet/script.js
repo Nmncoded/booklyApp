@@ -159,7 +159,7 @@ function showClearBtn(data) {
 
 function handleClrCmpltdClick(event) {
     // let cloneTodos = [];
-    allTodos =  allTodos.filter(todo => !todo.isDone) /* bug hai jb hum completed pr click krne ke baad clrcompleted pr click kr rhe hai to vo isDone = false objects return kr rha hai*/
+    allTodos =  allTodos.filter(todo => !todo.isDone) 
     if (showClearBtn(allTodos)) {
         clrCmplted.innerText = `Clear completed`
     } else {
@@ -179,7 +179,7 @@ function handleAllTodos(event) {
     isclrcmp = "all";
     isActive = "all";
     allTodos = allTodos.map(todo => todo);
-    // addFooter(ul);
+    updateColorOfBtn(isActive);
     createUI(allTodos,ul);
 }
 
@@ -189,6 +189,7 @@ function handleActiveTodos(event){
     let cloneTodos = [...allTodos];
     cloneTodos =  cloneTodos.filter(todo => !todo.isDone)
     createUI(cloneTodos, ul);
+    updateColorOfBtn(isActive);
 }
 
 function handleCompletedTodos(event){
@@ -198,7 +199,26 @@ function handleCompletedTodos(event){
     cloneTodos =  allTodos.filter(todo => todo.isDone)
     // footer.classList.remove(`footer`);
     createUI(cloneTodos, ul);
+    updateColorOfBtn(isActive);
 }
+
+function updateColorOfBtn(color){
+    all.classList.remove(`colorBtn`);
+    active.classList.remove(`colorBtn`);
+    completed.classList.remove(`colorBtn`);
+
+    if(color === "all"){
+        all.classList.add(`colorBtn`)
+    };
+    if(color === "active"){
+        active.classList.add(`colorBtn`)
+    };
+    if(color === "completed"){
+        completed.classList.add(`colorBtn`)
+    }
+}
+updateColorOfBtn(isActive);
+
 
 function addFooter(data){
 if(allTodos.length === 0){
