@@ -1,7 +1,7 @@
 /* <li class="card">
         <i class="fas fa-paw"></i> 
       </li> */
-
+function main (){
 const cardsArray = [
     {
         "name": "paw",
@@ -178,4 +178,5 @@ function setTimerout(data = elmforTimer){
 
 rootElm.addEventListener(`click`, handleCardClick);
 restartBtn.addEventListener(`click`, handleRestartClick);
-
+};
+main();
