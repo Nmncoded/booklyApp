@@ -5,6 +5,7 @@ let inputSearch = p.nextElementSibling;
 let ul = document.querySelector(`.ul`);
 let allHouseNames = document.querySelector(`.all-house-names`);
 let styleTag = "";
+var elem = React.createElement;
 
 let allHouses = got.houses.map(house => house);
 let allHousesPeople = got.houses.reduce((acc, cv) => {
@@ -45,31 +46,56 @@ function houseNameTags(data = allHouses) {
 };
 houseNameTags();
 
+// function elem(type,attr = {}, ...children){
+//     let element = document.createElement(type);
+//     for(let key in attr){
+//         if(key.startsWith(`data-`)){
+//             element.setAttribute(key,attr[key])
+//         }else if (key.startsWith(`on`)){
+//             let eventType = key.replace("on", "").toLowerCase();
+//             element.addEventListener(eventType,attr[key])
+//         }else{
+//             element[key] = attr[key];
+//         }
+//     }
+//     children.forEach(child => {
+//         if(typeof child === 'object'){
+//             element.append(child)
+//         }
+//         if(typeof child === 'string'){
+//             let node = document.createTextNode(child);
+//             element.append(node);
+//         }
+//     })
+//     return element;
+// }
+
 
 
 function allPeopleCards(data = allHousesPeople) {
-    ul.innerHTML = "";
-    data.forEach(person => {
-        let li = document.createElement(`li`);
-        let divElm = document.createElement(`div`);
-        divElm.classList.add(`div-elm`)
-        let imgElm = document.createElement(`img`);
-        imgElm.src = person.image;
-        let name = document.createElement(`h1`)
-        name.innerText = person.name
-        let descr = document.createElement(`p`)
-        descr.classList.add(`p`)
-        descr.innerText = person.description;
-        let btn = document.createElement(`button`)
-        btn.innerText = `Learn More!`
-        divElm.append(imgElm, name);
-        li.append(divElm, descr, btn);
-
-        ul.append(li);
+    // ul.innerHTML = "";
+    let ui = data.map(person => {
+        let li = elem(`li`,{},
+        elem(`div`, {
+            className: `div-elm`,
+        },
+        elem(`img`, {
+            src : person.image,
+        }),
+        elem(`h1`,{},person.name)
+        ),
+        elem(`p`, {
+            className: `p`,
+        },person.description),
+        elem(`button`,{},`Learn More!`)
+        );
+        return li;
         
     })
+    ReactDOM.render(ui,ul);
 };
 allPeopleCards();
+
 
 function handleInputSearch(event) {
     styleTag = "input";
@@ -88,3 +114,5 @@ main();
 //     return acc
 // }, []);
 // console.log(demo);
+
+
