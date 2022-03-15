@@ -46,47 +46,14 @@ function houseNameTags(data = allHouses) {
 };
 houseNameTags();
 
-// function elem(type,attr = {}, ...children){
-//     let element = document.createElement(type);
-//     for(let key in attr){
-//         if(key.startsWith(`data-`)){
-//             element.setAttribute(key,attr[key])
-//         }else if (key.startsWith(`on`)){
-//             let eventType = key.replace("on", "").toLowerCase();
-//             element.addEventListener(eventType,attr[key])
-//         }else{
-//             element[key] = attr[key];
-//         }
-//     }
-//     children.forEach(child => {
-//         if(typeof child === 'object'){
-//             element.append(child)
-//         }
-//         if(typeof child === 'string'){
-//             let node = document.createTextNode(child);
-//             element.append(node);
-//         }
-//     })
-//     return element;
-// }
-
 
 
 function allPeopleCards(data = allHousesPeople) {
     // ul.innerHTML = "";
     let ui = data.map(person => {
         let li = elem(`li`,{},
-        elem(`div`, {
-            className: `div-elm`,
-        },
-        elem(`img`, {
-            src : person.image,
-        }),
-        elem(`h1`,{},person.name)
-        ),
-        elem(`p`, {
-            className: `p`,
-        },person.description),
+        elem(`div`, {className: `div-elm`},elem(`img`, {src : person.image,}),elem(`h1`,{},person.name)),
+        elem(`p`, {className: `p`},person.description),
         elem(`button`,{},`Learn More!`)
         );
         return li;

@@ -17,8 +17,91 @@
     </div>
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="./data.js"></script>
-    <script src="./script.js"></script>
+    <script type="text/babel">
+      function main(){
+let p = document.querySelector(`header p`)
+p.innerText = `👑 People of GOT`;
+let inputSearch = p.nextElementSibling;
+let ul = document.querySelector(`.ul`);
+let allHouseNames = document.querySelector(`.all-house-names`);
+let styleTag = "";
+var elem = React.createElement;
+
+let allHouses = got.houses.map(house => house);
+let allHousesPeople = got.houses.reduce((acc, cv) => {
+    acc = acc.concat(cv.people);
+    return acc
+}, []);
+
+
+
+
+function houseNameTags(data = allHouses) {
+    allHouseNames.innerHTML = "";
+    data.forEach(house => {
+        let houseName = document.createElement(`li`);
+        houseName.classList.add(`li-style`);
+        houseName.innerText = `${house.name}`;
+
+        if( house === styleTag ){
+            houseName.classList.add(`style-tag`);
+        }else if (styleTag === "input"){
+            houseName.classList.remove(`style-tag`);
+        }
+        
+
+        houseName.addEventListener(`click`, (event) => {
+            data.find(house => {
+                if (event.target.innerText === house.name) {
+                    let clonedHouse = house.people;
+                    styleTag = house;
+                    houseNameTags(allHouses);
+                    allPeopleCards(clonedHouse);
+                }
+            })
+        });
+
+        allHouseNames.append(houseName);
+    })
+};
+houseNameTags();
+
+
+
+function allPeopleCards(data = allHousesPeople) {
+    // ul.innerHTML = "";
+    let ui = data.map(person => {
+        return <li>
+    <div className="div-elm">
+      <img src={person.image} />
+      <h1>{person.name}</h1>
+    </div>
+    <p className="p">{person.description}</p>
+    <button>learn More!</button>
+  </li>
+        
+    })
+    ReactDOM.render(ui,ul);
+};
+allPeopleCards();
+
+
+function handleInputSearch(event) {
+    styleTag = "input";
+    let value = event.target.value;
+    let clonedPerson = allHousesPeople.filter(person => (person.name.toLowerCase().includes(`${value.toLowerCase()}`)))
+    allPeopleCards(clonedPerson);
+    houseNameTags(allHouses);
+}
+
+
+inputSearch.addEventListener(`input`, handleInputSearch);
+}
+main();
+
+    </script>
   </body>
 </html>
 
@@ -40,3 +123,11 @@
   3. Search should happen on each key stroke
 -->
 
+<!-- <li>
+  <div className="div-elm">
+    <img src={person.image} alt={person.name} />
+    <h1>{person.name}</h1>
+  </div>
+  <p className="p">{person.description}</p>
+  <button>learn More!</button>
+</li> -->
